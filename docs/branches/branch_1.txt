@@ -11,3 +11,9 @@ METHOD:       add(a, b)
 INPUT DATA:   два числа a и b (int или float)
 OUTPUT DATA:  число (int или float) — сумма a и b
 FUNCTION:     вычисляет сумму двух чисел: a + b
+----------------------------------------------------------------
+
+METHOD:       subtract(a, b)
+INPUT DATA:   два числа a и b (int или float)
+OUTPUT DATA:  число (int или float) — разность a и b
+FUNCTION:     вычисляет разность двух чисел: a - b
