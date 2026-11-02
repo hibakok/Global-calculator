@@ -1,0 +1,17 @@
+================================================================
+ИНДЕКС МЕТОДОВ "GLOBAL-CALCULATOR"
+================================================================
+Обратный справочник: где живёт каждый метод. Одна строка на метод,
+порядок — по ветвям. Обновляется вместе с каждым новым методом.
+
+ВЕТВЬ 1. Элементарная арифметика
+  add         src/branch_1_arithmetic.py   сумма: a + b
+  subtract    src/branch_1_arithmetic.py   разность: a - b
+  multiply    src/branch_1_arithmetic.py   произведение: a * b
+  divide      src/branch_1_arithmetic.py   частное: a / b (b != 0)
+
+ВЕТВЬ 2. Расширенная арифметика
+  power_int   src/branch_2_extended.py     a в целой степени n >= 0
+  int_divide  src/branch_2_extended.py     целое частное с округлением вниз
+  remainder   src/branch_2_extended.py     остаток от деления
+  percent     src/branch_2_extended.py     p процентов от числа x
