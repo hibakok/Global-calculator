@@ -1,7 +1,7 @@
 # Ветвь 2. Расширенная арифметика.
 
 from branch_1_arithmetic import multiply
-
+from branch_1_arithmetic import multiply, divide
 
 def power_int(a, n):
     """Возводит число a в целую неотрицательную степень n."""
@@ -24,3 +24,7 @@ def remainder(a, b):
     if b == 0:
         raise ZeroDivisionError("Деление на ноль запрещено.")
     return a % b
+
+def percent(x, p):
+    """Возвращает p процентов от числа x."""
+    return divide(multiply(x, p), 100)
