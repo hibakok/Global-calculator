@@ -37,3 +37,7 @@
   parse_term        src/branch_3b_parser.py  цепочка умножения, деления, остатка
   parse_expression  src/branch_3b_parser.py  цепочка сложения и вычитания
   calculate         src/branch_3b_parser.py  главная функция: строка -> число
+
+ВЕТВЬ 4. Научные функции
+  abs_value   src/branch_4_scientific.py   модуль числа
+  sign        src/branch_4_scientific.py   знак числа: -1, 0 или 1
