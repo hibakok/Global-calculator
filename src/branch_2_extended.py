@@ -18,3 +18,9 @@ def int_divide(a, b):
     if b == 0:
         raise ZeroDivisionError("Деление на ноль запрещено.")
     return a // b
+    
+def remainder(a, b):
+    """Возвращает остаток от деления a на b (со знаком делителя)."""
+    if b == 0:
+        raise ZeroDivisionError("Деление на ноль запрещено.")
+    return a % b
