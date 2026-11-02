@@ -4,6 +4,14 @@
 Один шаг = одно изменение репозитория. Свежие шаги сверху.
 Нумерация сквозная. Даты — по времени коммитов.
 
+ШАГ 14 — 2026-11-03 — Ветвь 3b «Парсер и вычислитель»
+  (src/branch_3b_parser.py): current_token, power_signed,
+  apply_binary, parse_factor, parse_power, parse_term,
+  parse_expression, calculate. Появилась главная функция
+  калькулятора: calculate("2 + 2 * 2") = 6 — приоритеты
+  операций, скобки, унарные знаки, правоассоциативная целая
+  степень. Ветвь 3 «Разбор выражений» завершена.
+
 ШАГ 13 — 2026-11-03 — Ветвь 3a «Токенизатор»
   (src/branch_3a_tokenizer.py): is_digit, is_space,
   is_operator, skip_spaces, read_digits, read_number,
