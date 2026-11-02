@@ -12,3 +12,9 @@ def subtract(a, b):
 def multiply(a, b):
     """Возвращает произведение двух чисел: a * b."""
     return a * b
+    
+def divide(a, b):
+    """Возвращает частное двух чисел: a / b."""
+    if b == 0:
+        raise ZeroDivisionError("Деление на ноль запрещено.")
+    return a / b

@@ -21,3 +21,8 @@ METHOD:       multiply(a, b)
 INPUT DATA:   два числа a и b (int или float)
 OUTPUT DATA:  число (int или float) — произведение a и b
 FUNCTION:     вычисляет произведение двух чисел: a * b
+----------------------------------------------------------------
+METHOD:       divide(a, b)
+INPUT DATA:   два числа a и b (int или float); b не должен быть нулём
+OUTPUT DATA:  число (float или int) — частное a / b; при b == 0 возникает исключение ZeroDivisionError
+FUNCTION:     вычисляет частное двух чисел: a / b; перед вычислением проверяет делитель на ноль
