@@ -27,3 +27,13 @@
   make_token   src/branch_3a_tokenizer.py  токен — пара (тип, значение)
   read_token   src/branch_3a_tokenizer.py  один токен и следующая позиция
   tokenize     src/branch_3a_tokenizer.py  список токенов всей строки
+
+ВЕТВЬ 3B. Разбор выражений: парсер и вычислитель
+  current_token     src/branch_3b_parser.py  токен на позиции или токен конца
+  power_signed      src/branch_3b_parser.py  a в целой степени, включая отрицательную
+  apply_binary      src/branch_3b_parser.py  результат бинарной операции
+  parse_factor      src/branch_3b_parser.py  число, скобка или унарный знак
+  parse_power       src/branch_3b_parser.py  степень (правоассоциативно)
+  parse_term        src/branch_3b_parser.py  цепочка умножения, деления, остатка
+  parse_expression  src/branch_3b_parser.py  цепочка сложения и вычитания
+  calculate         src/branch_3b_parser.py  главная функция: строка -> число
