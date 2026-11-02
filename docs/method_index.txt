@@ -16,3 +16,14 @@
   remainder   src/branch_2_extended.py     остаток от деления
   percent     src/branch_2_extended.py     p процентов от числа x
   root_int    src/branch_2_extended.py     целая часть корня степени n
+
+ВЕТВЬ 3A. Разбор выражений: токенизатор
+  is_digit     src/branch_3a_tokenizer.py  True, если символ — цифра
+  is_space     src/branch_3a_tokenizer.py  True, если символ — пробельный
+  is_operator  src/branch_3a_tokenizer.py  True, если символ — знак операции
+  skip_spaces  src/branch_3a_tokenizer.py  индекс первого непробельного символа
+  read_digits  src/branch_3a_tokenizer.py  позиция за последовательностью цифр
+  read_number  src/branch_3a_tokenizer.py  число и следующая позиция из строки
+  make_token   src/branch_3a_tokenizer.py  токен — пара (тип, значение)
+  read_token   src/branch_3a_tokenizer.py  один токен и следующая позиция
+  tokenize     src/branch_3a_tokenizer.py  список токенов всей строки
