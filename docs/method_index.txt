@@ -15,3 +15,4 @@
   int_divide  src/branch_2_extended.py     целое частное с округлением вниз
   remainder   src/branch_2_extended.py     остаток от деления
   percent     src/branch_2_extended.py     p процентов от числа x
+  root_int    src/branch_2_extended.py     целая часть корня степени n
