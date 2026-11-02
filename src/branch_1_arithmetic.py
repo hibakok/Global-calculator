@@ -8,3 +8,7 @@ def add(a, b):
 def subtract(a, b):
     """Возвращает разность двух чисел: a - b."""
     return a - b
+    
+def multiply(a, b):
+    """Возвращает произведение двух чисел: a * b."""
+    return a * b
