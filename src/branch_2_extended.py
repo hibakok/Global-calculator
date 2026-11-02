@@ -1,6 +1,5 @@
 # Ветвь 2. Расширенная арифметика.
 
-from branch_1_arithmetic import multiply
 from branch_1_arithmetic import multiply, divide
 
 def power_int(a, n):
