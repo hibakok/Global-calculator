@@ -11,3 +11,10 @@ def power_int(a, n):
     for _ in range(n):
         result = multiply(result, a)
     return result
+
+
+def int_divide(a, b):
+    """Возвращает целую часть частного a / b, округлённую вниз."""
+    if b == 0:
+        raise ZeroDivisionError("Деление на ноль запрещено.")
+    return a // b
