@@ -1,0 +1,13 @@
+# Ветвь 2. Расширенная арифметика.
+
+from branch_1_arithmetic import multiply
+
+
+def power_int(a, n):
+    """Возводит число a в целую неотрицательную степень n."""
+    if n < 0:
+        raise ValueError("Степень должна быть целой и неотрицательной.")
+    result = 1
+    for _ in range(n):
+        result = multiply(result, a)
+    return result
