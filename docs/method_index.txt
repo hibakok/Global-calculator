@@ -38,7 +38,14 @@
   parse_expression  src/branch_3b_parser.py  цепочка сложения и вычитания
   calculate         src/branch_3b_parser.py  главная функция: строка -> число
 
-ВЕТВЬ 4. Научные функции
-  abs_value   src/branch_4_scientific.py   модуль числа
-  sign        src/branch_4_scientific.py   знак числа: -1, 0 или 1
-  sqrt_real   src/branch_4_scientific.py   квадратный корень, метод Ньютона
+ВЕТВЬ 4. Научные функции: экспонента и логарифм
+  abs_value    src/branch_4_scientific.py   модуль числа
+  sign         src/branch_4_scientific.py   знак числа: -1, 0 или 1
+  sqrt_real    src/branch_4_scientific.py   квадратный корень, метод Ньютона
+  exp_series   src/branch_4_scientific.py   ряд экспоненты для |x| <= 1
+  exp_real     src/branch_4_scientific.py   e в степени x (экспонента)
+  get_e        src/branch_4_scientific.py   число e
+  ln_series    src/branch_4_scientific.py   ряд логарифма для |u| <= 1/2
+  get_ln2      src/branch_4_scientific.py   натуральный логарифм числа 2
+  ln_positive  src/branch_4_scientific.py   натуральный логарифм, x > 0
+  power_real   src/branch_4_scientific.py   a в вещественной степени b
