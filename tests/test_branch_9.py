@@ -1,4 +1,5 @@
-# Тесты ветви 9: консольный интерфейс, часть 1 — цикл ввода.
+# Тесты ветви 9: консольный интерфейс — цикл ввода (часть 1)
+# и справка с понятным выводом ошибок (часть 2).
 # На каждый метод: обычный, граничный и ошибочный случай
 # (у методов без исключений третий случай — ещё одна граница).
 # Цикл ввода проверяется подменой builtins.input и перехватом
@@ -14,10 +15,12 @@ import unittest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
-from branch_7_memory import make_session
+from branch_7_memory import make_session, get_log
 from branch_9_console import (
-    is_exit_command, is_blank, format_value, result_text, error_text,
-    line_output, read_line, run_repl, main,
+    is_exit_command, is_help_command, is_blank, format_value,
+    result_text, error_text, explain_error, help_commands_text,
+    help_syntax_text, help_functions_text, help_variables_text,
+    help_text, line_output, read_line, run_repl, main,
 )
 
 
@@ -72,6 +75,19 @@ class TestIsExitCommand(unittest.TestCase):
         self.assertEqual(is_exit_command(""), False)
 
 
+class TestIsHelpCommand(unittest.TestCase):
+    def test_usual(self):
+        self.assertEqual(is_help_command("help"), True)
+
+    def test_boundary(self):
+        self.assertEqual(is_help_command("  СПРАВКА "), True)
+        self.assertEqual(is_help_command("?"), True)
+
+    def test_error(self):
+        self.assertEqual(is_help_command("help = 5"), False)
+        self.assertEqual(is_help_command("heelo"), False)
+
+
 class TestIsBlank(unittest.TestCase):
     def test_usual(self):
         self.assertEqual(is_blank("   "), True)
@@ -82,6 +98,65 @@ class TestIsBlank(unittest.TestCase):
 
     def test_error(self):
         self.assertEqual(is_blank("2 + 2"), False)
+
+
+class TestHelpCommandsText(unittest.TestCase):
+    def test_usual(self):
+        self.assertTrue(help_commands_text().startswith("Команды:"))
+
+    def test_boundary(self):
+        self.assertIn("exit", help_commands_text())
+        self.assertIn("?", help_commands_text())
+
+    def test_error(self):
+        self.assertFalse(help_commands_text().endswith("\n"))
+
+
+class TestHelpSyntaxText(unittest.TestCase):
+    def test_usual(self):
+        self.assertIn("^", help_syntax_text())
+
+    def test_boundary(self):
+        self.assertIn("1e3", help_syntax_text())
+
+    def test_error(self):
+        self.assertTrue(help_syntax_text().startswith("Выражения:"))
+
+
+class TestHelpFunctionsText(unittest.TestCase):
+    def test_usual(self):
+        self.assertIn("sqrt(x)", help_functions_text())
+
+    def test_boundary(self):
+        self.assertIn("pi", help_functions_text())
+
+    def test_error(self):
+        self.assertTrue(help_functions_text().startswith("Функции"))
+
+
+class TestHelpVariablesText(unittest.TestCase):
+    def test_usual(self):
+        self.assertIn("ans", help_variables_text())
+
+    def test_boundary(self):
+        self.assertIn("=", help_variables_text())
+
+    def test_error(self):
+        self.assertTrue(help_variables_text().startswith("Переменные:"))
+
+
+class TestHelpText(unittest.TestCase):
+    def test_usual(self):
+        for header in ("Команды:", "Выражения:", "Функции", "Переменные:"):
+            self.assertIn(header, help_text())
+
+    def test_boundary(self):
+        self.assertTrue(help_text().startswith("Команды:"))
+        self.assertFalse(help_text().endswith("\n"))
+
+    def test_error(self):
+        self.assertIn(help_commands_text(), help_text())
+        self.assertIn(help_variables_text(), help_text())
 
 
 class TestFormatValue(unittest.TestCase):
@@ -105,6 +180,19 @@ class TestResultText(unittest.TestCase):
 
     def test_error(self):
         self.assertEqual(result_text(-3), "= -3")
+
+
+class TestExplainError(unittest.TestCase):
+    def test_usual(self):
+        self.assertEqual(explain_error(ValueError("тест")), "тест")
+
+    def test_boundary(self):
+        self.assertEqual(
+            explain_error(RecursionError("maximum recursion depth exceeded")),
+            "Слишком глубокая вложенность скобок или функций.")
+
+    def test_error(self):
+        self.assertEqual(explain_error(TypeError("")), "")
 
 
 class TestErrorText(unittest.TestCase):
@@ -136,6 +224,25 @@ class TestLineOutput(unittest.TestCase):
                          "Ошибка: Деление на ноль запрещено.")
         self.assertEqual(line_output("2 +", session),
                          "Ошибка: Ожидалось число, имя, открывающая скобка или унарный знак.")
+
+
+class TestLineOutputHelp(unittest.TestCase):
+    def test_usual(self):
+        self.assertEqual(line_output("help", make_session()), help_text())
+
+    def test_boundary(self):
+        session = make_session()
+        self.assertEqual(line_output("  ?  ", session), help_text())
+        self.assertEqual(line_output("HELP", session), help_text())
+        self.assertEqual(line_output("help = 5", session), "= 5")
+
+    def test_error(self):
+        session = make_session()
+        deep = "(" * 2000 + "1" + ")" * 2000
+        self.assertEqual(
+            line_output(deep, session),
+            "Ошибка: Слишком глубокая вложенность скобок или функций.")
+        self.assertEqual(get_log(session), [])
 
 
 class TestReadLine(unittest.TestCase):
@@ -181,6 +288,22 @@ class TestRunRepl(unittest.TestCase):
         output = run_with_inputs(["1 / 0", "2 + 2", "exit"], make_session())
         self.assertIn("Ошибка: Деление на ноль запрещено.", output)
         self.assertIn("= 4", output)
+
+
+class TestRunReplHelp(unittest.TestCase):
+    def test_usual(self):
+        output = run_with_inputs(["help", "exit"], make_session())
+        self.assertIn("Команды:", output)
+
+    def test_boundary(self):
+        output = run_with_inputs(["?", "2 + 2", "выход"], make_session())
+        self.assertIn("Переменные:", output)
+        self.assertIn("= 4", output)
+
+    def test_error(self):
+        output = run_main_with_inputs(["help", "exit"])
+        self.assertIn("Команды:", output)
+        self.assertIn("help", output)
 
 
 class TestMain(unittest.TestCase):
