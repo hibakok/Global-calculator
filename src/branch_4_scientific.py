@@ -30,6 +30,6 @@ def sqrt_real(x):
     y = divide(add(x, 1), 2)
     while True:
         nxt = divide(add(y, divide(x, y)), 2)
-        if nxt >= y:
+        if not (nxt < y):
             return y
         y = nxt

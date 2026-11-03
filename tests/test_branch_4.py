@@ -63,6 +63,11 @@ class TestSqrtReal(unittest.TestCase):
     def test_negative_rejected(self):
         with self.assertRaises(ValueError):
             sqrt_real(-4)
+            
+    def test_nan_returns_nan_without_hanging(self):
+        # nan не должен вызывать вечный цикл: проверка not (nxt < y).
+        result = sqrt_real(float("nan"))
+        self.assertNotEqual(result, result)
 
 
 if __name__ == "__main__":
