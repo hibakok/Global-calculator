@@ -49,3 +49,14 @@
   get_ln2      src/branch_4_scientific.py   натуральный логарифм числа 2
   ln_positive  src/branch_4_scientific.py   натуральный логарифм, x > 0
   power_real   src/branch_4_scientific.py   a в вещественной степени b
+
+
+ВЕТВЬ 5. Тригонометрия
+  arctan_series  src/branch_5_trigonometry.py  ряд арктангенса для |z| < 1
+  get_pi         src/branch_5_trigonometry.py  число пи (формула Мэчина)
+  reduce_angle   src/branch_5_trigonometry.py  угол x -> пара (k, r), x = k*pi + r
+  sin_series     src/branch_5_trigonometry.py  ряд синуса для |r| <= pi/2
+  cos_series     src/branch_5_trigonometry.py  ряд косинуса для |r| <= pi/2
+  sin_rad        src/branch_5_trigonometry.py  синус угла в радианах
+  cos_rad        src/branch_5_trigonometry.py  косинус угла в радианах
+  tan_rad        src/branch_5_trigonometry.py  тангенс угла в радианах
