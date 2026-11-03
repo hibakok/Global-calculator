@@ -60,3 +60,14 @@
   sin_rad        src/branch_5_trigonometry.py  синус угла в радианах
   cos_rad        src/branch_5_trigonometry.py  косинус угла в радианах
   tan_rad        src/branch_5_trigonometry.py  тангенс угла в радианах
+
+  ВЕТВЬ 6. Научные выражения
+  is_letter             src/branch_6_scientific_expressions.py  True, если символ — латинская буква
+  read_name             src/branch_6_scientific_expressions.py  позиция за последовательностью букв
+  is_exponent_letter    src/branch_6_scientific_expressions.py  True, если символ — e или E
+  has_exponent          src/branch_6_scientific_expressions.py  True, если за мантиссой следует показатель степени
+  exponent_digits_start src/branch_6_scientific_expressions.py  позиция первой цифры показателя степени
+  read_number_exp       src/branch_6_scientific_expressions.py  число с показателем (1e3) и следующая позиция
+  read_token_scientific src/branch_6_scientific_expressions.py  один токен научного выражения
+  tokenize_with         src/branch_6_scientific_expressions.py  список токенов произвольным читателем
+  tokenize_scientific   src/branch_6_scientific_expressions.py  список токенов научного выражения
