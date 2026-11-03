@@ -84,7 +84,7 @@
   parse_expression_scientific  src/branch_6b_scientific_parser.py  цепочка сложения и вычитания
   calculate_scientific  src/branch_6b_scientific_parser.py  главная функция: строка -> число
 
-  ВЕТВЬ 7. Память и история: переменные
+ВЕТВЬ 7. Память и история: переменные, ans, стек и журнал
   make_memory           src/branch_7_memory.py    пустая память — словарь переменных
   find_equals           src/branch_7_memory.py    позиция первого "=" или -1
   is_valid_name         src/branch_7_memory.py    True для непустого имени из латинских букв
@@ -94,4 +94,13 @@
   substitute_variables  src/branch_7_memory.py    подмена всех имён переменных в токенах
   evaluate_tokens       src/branch_7_memory.py    значение полного списка научных токенов
   assign_variable       src/branch_7_memory.py    вычислить rhs и сохранить в память
-  calculate_with_memory src/branch_7_memory.py    главная функция: выражение или присваивание с памятью
+  calculate_with_memory src/branch_7_memory.py    главная функция части 1: выражение или присваивание с памятью
+  make_session          src/branch_7_memory.py    пустая сессия: память, стек, журнал
+  remember_answer       src/branch_7_memory.py    сохраняет ans — последний результат
+  push_result           src/branch_7_memory.py    добавляет результат в стек
+  log_operation         src/branch_7_memory.py    добавляет пару (строка, результат) в журнал
+  remember_result       src/branch_7_memory.py    запоминает результат в ans, стек и журнал
+  get_answer            src/branch_7_memory.py    последний результат ans или None
+  get_results           src/branch_7_memory.py    копия стека результатов
+  get_log               src/branch_7_memory.py    копия журнала операций
+  calculate_session     src/branch_7_memory.py    главная функция сессии: строка -> число с историей

@@ -1,4 +1,4 @@
-# Тесты Ветви 7. Память и история: переменные.
+# Тесты Ветви 7. Память и история: переменные, ans, стек и журнал.
 # Запуск из корня репозитория: python -m unittest discover -s tests -v
 
 import os
@@ -11,6 +11,9 @@ from branch_7_memory import (
     make_memory, find_equals, is_valid_name, split_assignment,
     is_reserved_name, substitute_token, substitute_variables,
     evaluate_tokens, assign_variable, calculate_with_memory,
+    make_session, remember_answer, push_result, log_operation,
+    remember_result, get_answer, get_results, get_log,
+    calculate_session,
 )
 from branch_6a_scientific_tokenizer import tokenize_scientific
 
@@ -228,6 +231,161 @@ class TestCalculateWithMemory(unittest.TestCase):
     def test_bad_left_side(self):
         with self.assertRaises(ValueError):
             calculate_with_memory("2 = 2", make_memory())
+
+
+class TestMakeSession(unittest.TestCase):
+    def test_shape(self):
+        session = make_session()
+        self.assertEqual(session["memory"], {})
+        self.assertEqual(session["stack"], [])
+        self.assertEqual(session["log"], [])
+
+    def test_independent(self):
+        first = make_session()
+        second = make_session()
+        first["stack"].append(1)
+        self.assertEqual(second["stack"], [])
+
+
+class TestRememberAnswer(unittest.TestCase):
+    def test_stores_ans(self):
+        session = make_session()
+        remember_answer(session, 4)
+        self.assertEqual(session["memory"]["ans"], 4)
+
+    def test_overwrites(self):
+        session = make_session()
+        remember_answer(session, 4)
+        remember_answer(session, 5)
+        self.assertEqual(session["memory"]["ans"], 5)
+
+
+class TestPushResult(unittest.TestCase):
+    def test_appends_in_order(self):
+        session = make_session()
+        push_result(session, 4)
+        push_result(session, 8)
+        self.assertEqual(session["stack"], [4, 8])
+
+
+class TestLogOperation(unittest.TestCase):
+    def test_appends_pairs_in_order(self):
+        session = make_session()
+        log_operation(session, "1 + 1", 2)
+        log_operation(session, "2 + 2", 4)
+        self.assertEqual(session["log"], [("1 + 1", 2), ("2 + 2", 4)])
+
+
+class TestRememberResult(unittest.TestCase):
+    def test_all_three(self):
+        session = make_session()
+        remember_result(session, "2 + 2", 4)
+        self.assertEqual(get_answer(session), 4)
+        self.assertEqual(get_results(session), [4])
+        self.assertEqual(get_log(session), [("2 + 2", 4)])
+
+
+class TestGetAnswer(unittest.TestCase):
+    def test_none_initially(self):
+        self.assertIsNone(get_answer(make_session()))
+
+    def test_after_remembering(self):
+        session = make_session()
+        remember_answer(session, 7)
+        self.assertEqual(get_answer(session), 7)
+
+
+class TestGetResults(unittest.TestCase):
+    def test_order(self):
+        session = make_session()
+        push_result(session, 2)
+        push_result(session, 4)
+        self.assertEqual(get_results(session), [2, 4])
+
+    def test_copy_is_independent(self):
+        session = make_session()
+        push_result(session, 1)
+        results = get_results(session)
+        results.append(999)
+        self.assertEqual(get_results(session), [1])
+
+
+class TestGetLog(unittest.TestCase):
+    def test_entries(self):
+        session = make_session()
+        log_operation(session, "1 + 1", 2)
+        self.assertEqual(get_log(session), [("1 + 1", 2)])
+
+    def test_copy_is_independent(self):
+        session = make_session()
+        log_operation(session, "1 + 1", 2)
+        log = get_log(session)
+        log.append(("x", 0))
+        self.assertEqual(get_log(session), [("1 + 1", 2)])
+
+
+class TestCalculateSession(unittest.TestCase):
+    def test_expression(self):
+        session = make_session()
+        self.assertEqual(calculate_session("2 + 2", session), 4)
+
+    def test_ans_variable(self):
+        session = make_session()
+        calculate_session("2 + 2", session)
+        self.assertEqual(calculate_session("ans * 2", session), 8)
+
+    def test_variables_still_work(self):
+        session = make_session()
+        calculate_session("x = 2", session)
+        self.assertEqual(calculate_session("x * 3", session), 6)
+        self.assertEqual(session["memory"]["x"], 2)
+
+    def test_assignment_updates_ans(self):
+        session = make_session()
+        calculate_session("x = 3 * 3", session)
+        self.assertEqual(get_answer(session), 9)
+
+    def test_stack_grows(self):
+        session = make_session()
+        calculate_session("1 + 1", session)
+        calculate_session("2 + 2", session)
+        self.assertEqual(get_results(session), [2, 4])
+
+    def test_log_entries(self):
+        session = make_session()
+        calculate_session("1 + 1", session)
+        calculate_session("2 + 2", session)
+        self.assertEqual(get_log(session), [("1 + 1", 2), ("2 + 2", 4)])
+
+    def test_division_error_no_trace(self):
+        session = make_session()
+        with self.assertRaises(ZeroDivisionError):
+            calculate_session("1 / 0", session)
+        self.assertIsNone(get_answer(session))
+        self.assertEqual(get_results(session), [])
+        self.assertEqual(get_log(session), [])
+
+    def test_unknown_name_error_no_trace(self):
+        session = make_session()
+        calculate_session("2 + 2", session)
+        with self.assertRaises(ValueError):
+            calculate_session("y + 1", session)
+        self.assertEqual(get_results(session), [4])
+        self.assertEqual(get_log(session), [("2 + 2", 4)])
+
+    def test_ans_in_function_call(self):
+        session = make_session()
+        calculate_session("x = pi / 2", session)
+        self.assertAlmostEqual(calculate_session("sin(ans)", session), 1.0, places=12)
+
+    def test_ans_before_first_calculation(self):
+        with self.assertRaises(ValueError):
+            calculate_session("ans + 1", make_session())
+
+    def test_user_can_assign_ans(self):
+        session = make_session()
+        self.assertEqual(calculate_session("ans = 5", session), 5)
+        self.assertEqual(get_answer(session), 5)
 
 
 if __name__ == "__main__":
