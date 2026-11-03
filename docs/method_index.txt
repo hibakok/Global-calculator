@@ -50,7 +50,6 @@
   ln_positive  src/branch_4_scientific.py   натуральный логарифм, x > 0
   power_real   src/branch_4_scientific.py   a в вещественной степени b
 
-
 ВЕТВЬ 5. Тригонометрия
   arctan_series  src/branch_5_trigonometry.py  ряд арктангенса для |z| < 1
   get_pi         src/branch_5_trigonometry.py  число пи (формула Мэчина)
@@ -61,13 +60,26 @@
   cos_rad        src/branch_5_trigonometry.py  косинус угла в радианах
   tan_rad        src/branch_5_trigonometry.py  тангенс угла в радианах
 
-  ВЕТВЬ 6. Научные выражения
-  is_letter             src/branch_6_scientific_expressions.py  True, если символ — латинская буква
-  read_name             src/branch_6_scientific_expressions.py  позиция за последовательностью букв
-  is_exponent_letter    src/branch_6_scientific_expressions.py  True, если символ — e или E
-  has_exponent          src/branch_6_scientific_expressions.py  True, если за мантиссой следует показатель степени
-  exponent_digits_start src/branch_6_scientific_expressions.py  позиция первой цифры показателя степени
-  read_number_exp       src/branch_6_scientific_expressions.py  число с показателем (1e3) и следующая позиция
-  read_token_scientific src/branch_6_scientific_expressions.py  один токен научного выражения
-  tokenize_with         src/branch_6_scientific_expressions.py  список токенов произвольным читателем
-  tokenize_scientific   src/branch_6_scientific_expressions.py  список токенов научного выражения
+ВЕТВЬ 6A. Научные выражения: токенизатор
+  is_letter             src/branch_6a_scientific_tokenizer.py  True, если символ — латинская буква
+  read_name             src/branch_6a_scientific_tokenizer.py  позиция за последовательностью букв
+  is_exponent_letter    src/branch_6a_scientific_tokenizer.py  True, если символ — e или E
+  has_exponent          src/branch_6a_scientific_tokenizer.py  True, если за мантиссой следует показатель степени
+  exponent_digits_start src/branch_6a_scientific_tokenizer.py  позиция первой цифры показателя степени
+  read_number_exp       src/branch_6a_scientific_tokenizer.py  число с показателем (1e3) и следующая позиция
+  read_token_scientific src/branch_6a_scientific_tokenizer.py  один токен научного выражения
+  tokenize_with         src/branch_6a_scientific_tokenizer.py  список токенов произвольным читателем
+  tokenize_scientific   src/branch_6a_scientific_tokenizer.py  список токенов научного выражения
+
+ВЕТВЬ 6B. Научные выражения: таблицы имён, операции и парсер
+  apply_scientific      src/branch_6b_scientific_parser.py  бинарная операция; "^" — вещественная степень
+  is_constant           src/branch_6b_scientific_parser.py  True для констант pi и e
+  constant_value        src/branch_6b_scientific_parser.py  значение константы по имени
+  is_function           src/branch_6b_scientific_parser.py  True для sqrt, exp, ln, sin, cos, tan
+  apply_function        src/branch_6b_scientific_parser.py  применяет функцию по имени
+  parse_call            src/branch_6b_scientific_parser.py  разбор вызова функции
+  parse_factor_scientific    src/branch_6b_scientific_parser.py  множитель: число, константа, вызов, скобка, знак
+  parse_power_scientific     src/branch_6b_scientific_parser.py  вещественная степень (правоассоциативно)
+  parse_term_scientific      src/branch_6b_scientific_parser.py  цепочка умножения, деления, остатка
+  parse_expression_scientific  src/branch_6b_scientific_parser.py  цепочка сложения и вычитания
+  calculate_scientific  src/branch_6b_scientific_parser.py  главная функция: строка -> число
