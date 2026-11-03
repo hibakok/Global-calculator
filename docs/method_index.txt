@@ -143,3 +143,16 @@
   from_celsius          src/branch_8b_units.py  градусы Цельсия -> температура
   convert_temperature   src/branch_8b_units.py  температура: единица -> единица
   convert_unit          src/branch_8b_units.py  главная: любая единица -> единица той же категории
+
+  
+ВЕТВЬ 9. КОНСОЛЬНЫЙ ИНТЕРФЕЙС (часть 1: цикл ввода)
+  is_exit_command  src/branch_9_console.py  True для команд выхода: exit, quit, выход
+  is_blank         src/branch_9_console.py  True для пустой строки или одних пробелов
+  format_value     src/branch_9_console.py  число -> текст вывода: 4.0 -> '4'
+  result_text      src/branch_9_console.py  текст успешного ответа: '= 4'
+  error_text       src/branch_9_console.py  текст ошибки: 'Ошибка: ...'
+  line_output      src/branch_9_console.py  ответ на строку ввода (результат или ошибка) или None
+  read_line        src/branch_9_console.py  строка ввода или None при конце ввода / прерывании
+  run_repl         src/branch_9_console.py  цикл ввода-ответа до команды выхода или конца ввода
+  main             src/branch_9_console.py  запуск программы: приветствие, сессия, цикл
+                  (запуск программы из корня: python run.py)

@@ -16,6 +16,11 @@ Global Calculator
 Описание методов ветви	docs/branches/<имя ветви>.txt
 Правила кода	docs/conventions.txt
 Что уже сделано	docs/changelog.txt
+
+Как запустить
+python run.py
+Откроется цикл ввода: печатайте выражения (2 + 2 * 2, sqrt(16), x = 4, ans * 2) и получайте результат. Команды выхода: exit, quit, выход.
+
 Как запустить тесты
 python -m unittest discover -s tests -v
 Тесты также запускаются автоматически на каждый коммит и pull request (GitHub Actions). Зелёная галочка у коммита — всё в порядке.
