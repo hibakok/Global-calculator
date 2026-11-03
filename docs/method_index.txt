@@ -106,7 +106,7 @@
   calculate_session     src/branch_7_memory.py    главная функция сессии: строка -> число с историей
 
   
-ВЕТВЬ 8. ПРЕОБРАЗОВАНИЯ: СИСТЕМЫ СЧИСЛЕНИЯ
+ВЕТВЬ 8. ПРЕОБРАЗОВАНИЯ: СИСТЕМЫ СЧИСЛЕНИЯ (часть 1 ветви 8)
   digit_char        src/branch_8_conversions.py  значение 0-35 -> символ цифры
   digit_value       src/branch_8_conversions.py  символ цифры -> значение 0-35
   check_base        src/branch_8_conversions.py  проверка основания 2-36
@@ -121,3 +121,25 @@
   from_base_digits  src/branch_8_conversions.py  строка цифр -> число (схема Горнера)
   from_base_string  src/branch_8_conversions.py  главная: строка цифр со знаком -> целое число
   convert_base      src/branch_8_conversions.py  перевод между основаниями: строка -> строка
+
+  
+ВЕТВЬ 8B. ПРЕОБРАЗОВАНИЯ: ЕДИНИЦЫ ИЗМЕРЕНИЯ (часть 2 ветви 8)
+  is_length_unit        src/branch_8b_units.py  True для единиц длины: km, m, dm, cm, mm
+  length_factor         src/branch_8b_units.py  коэффициент единицы длины к метру
+  is_mass_unit          src/branch_8b_units.py  True для единиц массы: t, kg, g, mg
+  mass_factor           src/branch_8b_units.py  коэффициент единицы массы к грамму
+  is_volume_unit        src/branch_8b_units.py  True для единиц объёма: kl, l, ml
+  volume_factor         src/branch_8b_units.py  коэффициент единицы объёма к литру
+  linear_convert        src/branch_8b_units.py  перевод через отношение коэффициентов
+  convert_length        src/branch_8b_units.py  длина: единица -> единица
+  convert_mass          src/branch_8b_units.py  масса: единица -> единица
+  convert_volume        src/branch_8b_units.py  объём: единица -> единица
+  celsius_to_kelvin     src/branch_8b_units.py  градусы Цельсия -> кельвины
+  kelvin_to_celsius     src/branch_8b_units.py  кельвины -> градусы Цельсия
+  celsius_to_fahrenheit src/branch_8b_units.py  градусы Цельсия -> градусы Фаренгейта
+  fahrenheit_to_celsius src/branch_8b_units.py  градусы Фаренгейта -> градусы Цельсия
+  is_temperature_unit   src/branch_8b_units.py  True для единиц температуры: c, f, k
+  to_celsius            src/branch_8b_units.py  температура -> градусы Цельсия
+  from_celsius          src/branch_8b_units.py  градусы Цельсия -> температура
+  convert_temperature   src/branch_8b_units.py  температура: единица -> единица
+  convert_unit          src/branch_8b_units.py  главная: любая единица -> единица той же категории

@@ -1,0 +1,177 @@
+================================================================
+ВЕТВЬ 8B. ПРЕОБРАЗОВАНИЯ. ЧАСТЬ 2: ЕДИНИЦЫ ИЗМЕРЕНИЯ
+================================================================
+
+Файл кода подветви: src/branch_8b_units.py
+Собирается из методов Ветви 1 (add, subtract, multiply, divide).
+От части 1 ветви 8 (системы счисления) не зависит — части ветви
+изолированы друг от друга. Существующие ветви не изменяются.
+
+Единицы делятся на четыре категории. Три категории линейные:
+перевод внутри них — умножение на отношение коэффициентов к
+базовой единице категории (длина — метр, масса — грамм,
+объём — литр). Температура нелинейная: шкалы сдвинуты, поэтому
+перевод идёт через промежуточные градусы Цельсия.
+
+  категория     единицы
+  длина          km, m, dm, cm, mm
+  масса          t, kg, g, mg
+  объём          kl, l, ml
+  температура    c (Цельсий), f (Фаренгейт), k (Кельвин)
+
+Главная функция convert_unit определяет категорию по обеим
+единицам и переводит число: convert_unit(100, "km", "m") = 100000.0,
+convert_unit(-40, "f", "c") = -40.0. Единицы из разных категорий
+("km" и "kg") или неизвестные единицы дают ValueError.
+
+КОНСТАНТЫ (создаются при загрузке модуля, никогда не изменяются;
+глобального изменяемого состояния нет — docs/conventions.txt,
+раздел 6):
+  LENGTH_FACTORS    словарь "единица" -> коэффициент к метру
+  MASS_FACTORS      словарь "единица" -> коэффициент к грамму
+  VOLUME_FACTORS    словарь "единица" -> коэффициент к литру
+  TEMPERATURE_UNITS кортеж имён единиц температуры ("c", "f", "k")
+Чтобы добавить единицу в категорию, достаточно дописать элемент
+словаря-константы и тесты к переводу — новых методов не требуется.
+
+----------------------------------------------------------------
+МЕТОДЫ ВЕТВИ
+
+METHOD:       is_length_unit(name)
+INPUT DATA:   имя единицы name — строка
+OUTPUT DATA:  True, если name — единица длины (km, m, dm, cm, mm),
+              иначе False
+FUNCTION:     предикат единицы длины; используется length_factor
+              и convert_unit
+----------------------------------------------------------------
+METHOD:       length_factor(name)
+INPUT DATA:   имя единицы длины name — строка
+OUTPUT DATA:  коэффициент единицы к метру: length_factor("km") =
+              1000.0; для неизвестной единицы — ValueError
+FUNCTION:     доступ к словарю LENGTH_FACTORS с проверкой
+----------------------------------------------------------------
+METHOD:       is_mass_unit(name)
+INPUT DATA:   имя единицы name — строка
+OUTPUT DATA:  True, если name — единица массы (t, kg, g, mg),
+              иначе False
+FUNCTION:     предикат единицы массы; используется mass_factor
+              и convert_unit
+----------------------------------------------------------------
+METHOD:       mass_factor(name)
+INPUT DATA:   имя единицы массы name — строка
+OUTPUT DATA:  коэффициент единицы к грамму: mass_factor("t") =
+              1000000.0; для неизвестной единицы — ValueError
+FUNCTION:     доступ к словарю MASS_FACTORS с проверкой
+----------------------------------------------------------------
+METHOD:       is_volume_unit(name)
+INPUT DATA:   имя единицы name — строка
+OUTPUT DATA:  True, если name — единица объёма (kl, l, ml),
+              иначе False
+FUNCTION:     предикат единицы объёма; используется volume_factor
+              и convert_unit
+----------------------------------------------------------------
+METHOD:       volume_factor(name)
+INPUT DATA:   имя единицы объёма name — строка
+OUTPUT DATA:  коэффициент единицы к литру: volume_factor("kl") =
+              1000.0; для неизвестной единицы — ValueError
+FUNCTION:     доступ к словарю VOLUME_FACTORS с проверкой
+----------------------------------------------------------------
+METHOD:       linear_convert(x, from_factor, to_factor)
+INPUT DATA:   число x; коэффициент исходной единицы from_factor;
+              коэффициент целевой единицы to_factor
+OUTPUT DATA:  число x * from_factor / to_factor
+FUNCTION:     общий кирпичик всех линейных категорий: перевод
+              через отношение коэффициентов на multiply и divide
+              Ветви 1
+----------------------------------------------------------------
+METHOD:       convert_length(x, from_unit, to_unit)
+INPUT DATA:   длина x в единице from_unit; целевая единица to_unit
+OUTPUT DATA:  та же длина в единице to_unit:
+              convert_length(2, "km", "m") = 2000.0; ошибки
+              единиц — ValueError
+FUNCTION:     композиция linear_convert и length_factor
+----------------------------------------------------------------
+METHOD:       convert_mass(x, from_unit, to_unit)
+INPUT DATA:   масса x в единице from_unit; целевая единица to_unit
+OUTPUT DATA:  та же масса в единице to_unit:
+              convert_mass(1, "t", "kg") = 1000.0; ошибки
+              единиц — ValueError
+FUNCTION:     композиция linear_convert и mass_factor
+----------------------------------------------------------------
+METHOD:       convert_volume(x, from_unit, to_unit)
+INPUT DATA:   объём x в единице from_unit; целевая единица to_unit
+OUTPUT DATA:  тот же объём в единице to_unit:
+              convert_volume(1, "l", "ml") = 1000.0; ошибки
+              единиц — ValueError
+FUNCTION:     композиция linear_convert и volume_factor
+----------------------------------------------------------------
+METHOD:       celsius_to_kelvin(c)
+INPUT DATA:   температура c в градусах Цельсия
+OUTPUT DATA:  та же температура в кельвинах: c + 273.15
+FUNCTION:     кирпичик сдвига шкалы Цельсий -> Кельвин
+----------------------------------------------------------------
+METHOD:       kelvin_to_celsius(k)
+INPUT DATA:   температура k в кельвинах
+OUTPUT DATA:  та же температура в градусах Цельсия: k - 273.15
+FUNCTION:     кирпичик сдвига шкалы Кельвин -> Цельсий
+----------------------------------------------------------------
+METHOD:       celsius_to_fahrenheit(c)
+INPUT DATA:   температура c в градусах Цельсия
+OUTPUT DATA:  та же температура в градусах Фаренгейта:
+              c * 9 / 5 + 32; celsius_to_fahrenheit(100) = 212.0
+FUNCTION:     кирпичик шкалы Цельсий -> Фаренгейт на multiply,
+              divide и add Ветви 1
+----------------------------------------------------------------
+METHOD:       fahrenheit_to_celsius(f)
+INPUT DATA:   температура f в градусах Фаренгейта
+OUTPUT DATA:  та же температура в градусах Цельсия:
+              (f - 32) * 5 / 9; fahrenheit_to_celsius(32) = 0.0
+FUNCTION:     кирпичик шкалы Фаренгейт -> Цельсий на subtract,
+              multiply и divide Ветви 1
+----------------------------------------------------------------
+METHOD:       is_temperature_unit(name)
+INPUT DATA:   имя единицы name — строка
+OUTPUT DATA:  True, если name — единица температуры (c, f, k),
+              иначе False
+FUNCTION:     предикат единицы температуры; используется
+              to_celsius, from_celsius и convert_unit
+----------------------------------------------------------------
+METHOD:       to_celsius(x, from_unit)
+INPUT DATA:   температура x в единице from_unit: c, f или k
+OUTPUT DATA:  та же температура в градусах Цельсия:
+              to_celsius(212, "f") = 100.0; для неизвестной
+              единицы — ValueError
+FUNCTION:     выбор кирпичика по имени единицы: f — через
+              fahrenheit_to_celsius, k — через kelvin_to_celsius,
+              c — само число
+----------------------------------------------------------------
+METHOD:       from_celsius(c, to_unit)
+INPUT DATA:   температура c в градусах Цельсия; целевая единица
+              to_unit: c, f или k
+OUTPUT DATA:  та же температура в единице to_unit:
+              from_celsius(100, "f") = 212.0; для неизвестной
+              единицы — ValueError
+FUNCTION:     выбор кирпичика по имени единицы: f — через
+              celsius_to_fahrenheit, k — через celsius_to_kelvin,
+              c — само число
+----------------------------------------------------------------
+METHOD:       convert_temperature(x, from_unit, to_unit)
+INPUT DATA:   температура x в единице from_unit; целевая единица
+              to_unit (обе: c, f, k)
+OUTPUT DATA:  та же температура в единице to_unit:
+              convert_temperature(-40, "f", "c") = -40.0
+FUNCTION:     композиция to_celsius и from_celsius: перевод через
+              промежуточные градусы Цельсия
+----------------------------------------------------------------
+METHOD:       convert_unit(x, from_unit, to_unit)
+INPUT DATA:   число x в единице from_unit; целевая единица
+              to_unit — любые единицы одной категории
+OUTPUT DATA:  то же значение в единице to_unit:
+              convert_unit(100, "km", "m") = 100000.0,
+              convert_unit(1, "t", "kg") = 1000.0,
+              convert_unit(0, "c", "k") = 273.15
+FUNCTION:     главная функция части 2: определяет категорию по
+              обеим единицам предикатами категорий и вызывает
+              convert_length, convert_mass, convert_volume или
+              convert_temperature; единицы из разных категорий
+              и неизвестные единицы — ValueError
