@@ -104,3 +104,20 @@
   get_results           src/branch_7_memory.py    копия стека результатов
   get_log               src/branch_7_memory.py    копия журнала операций
   calculate_session     src/branch_7_memory.py    главная функция сессии: строка -> число с историей
+
+  
+ВЕТВЬ 8. ПРЕОБРАЗОВАНИЯ: СИСТЕМЫ СЧИСЛЕНИЯ
+  digit_char        src/branch_8_conversions.py  значение 0-35 -> символ цифры
+  digit_value       src/branch_8_conversions.py  символ цифры -> значение 0-35
+  check_base        src/branch_8_conversions.py  проверка основания 2-36
+  check_integer     src/branch_8_conversions.py  проверка целого числа
+  is_base_digit     src/branch_8_conversions.py  True, если символ — цифра при основании base
+  check_base_digit  src/branch_8_conversions.py  значение цифры с проверкой основания
+  to_base_values    src/branch_8_conversions.py  число -> значения цифр, от младшей к старшей
+  values_to_string  src/branch_8_conversions.py  значения цифр (от старшей к младшей) -> строка
+  to_base_positive  src/branch_8_conversions.py  неотрицательное число -> строка цифр
+  to_base_string    src/branch_8_conversions.py  главная: целое число -> строка цифр со знаком
+  split_sign        src/branch_8_conversions.py  строка -> пара (знак, цифры без пробелов)
+  from_base_digits  src/branch_8_conversions.py  строка цифр -> число (схема Горнера)
+  from_base_string  src/branch_8_conversions.py  главная: строка цифр со знаком -> целое число
+  convert_base      src/branch_8_conversions.py  перевод между основаниями: строка -> строка
