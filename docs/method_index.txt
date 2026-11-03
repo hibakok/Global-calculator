@@ -83,3 +83,15 @@
   parse_term_scientific      src/branch_6b_scientific_parser.py  цепочка умножения, деления, остатка
   parse_expression_scientific  src/branch_6b_scientific_parser.py  цепочка сложения и вычитания
   calculate_scientific  src/branch_6b_scientific_parser.py  главная функция: строка -> число
+
+  ВЕТВЬ 7. Память и история: переменные
+  make_memory           src/branch_7_memory.py    пустая память — словарь переменных
+  find_equals           src/branch_7_memory.py    позиция первого "=" или -1
+  is_valid_name         src/branch_7_memory.py    True для непустого имени из латинских букв
+  split_assignment      src/branch_7_memory.py    пара (имя, выражение) или None
+  is_reserved_name      src/branch_7_memory.py    True, если имя занято константой или функцией
+  substitute_token      src/branch_7_memory.py    подмена токена-имени значением переменной
+  substitute_variables  src/branch_7_memory.py    подмена всех имён переменных в токенах
+  evaluate_tokens       src/branch_7_memory.py    значение полного списка научных токенов
+  assign_variable       src/branch_7_memory.py    вычислить rhs и сохранить в память
+  calculate_with_memory src/branch_7_memory.py    главная функция: выражение или присваивание с памятью
